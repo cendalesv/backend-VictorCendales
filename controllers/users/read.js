@@ -1,8 +1,20 @@
 import User from "../../models/User.js";
+import "../../models/Auto.js"
 
 let allUsers = async (req,res,next) => {
     try {
-        let all = await User.find()
+        //filtros
+        let {name,role} = req.query
+        console.log(name);
+        console.log(role);
+        let query = {}
+
+        if (name) {
+            query.name = {$regex: "^" +name , $options: "i"}
+        }
+
+        let all = await User.find(query).populate("auto", "marca modelo").exec();
+
         return res.status(200).json({
             response: all
         })
@@ -10,7 +22,6 @@ let allUsers = async (req,res,next) => {
         next(error)
     }
 }     
-
 
 let userByRole = async (req,res) => {
     try {

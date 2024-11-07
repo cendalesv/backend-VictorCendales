@@ -8,3 +8,6 @@ npm install dotenv
 npm install mongoose
 
 crea un archivo .env
+
+instalacion de joi
+npm install joi
